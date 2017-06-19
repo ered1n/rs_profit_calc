@@ -1,46 +1,47 @@
 from Tkinter import *
 
+global row
+row = 1
+
+def generateLabel(master):
+    Label(master, text='Item: ').grid(row=row, sticky=W)
+
 def generateInput(master):
-    input = Entry(master)
-    input.pack(side=LEFT, pady=10)
+    Entry(master).grid(row=row, column=1)
 
 def generateButton(master, command):
-    button = Button(master, text='Buy item', command=command)
-    button.pack(side=LEFT, padx=10)
+    Button(master, text='Buy item', command=command).grid(row=row, column=2, padx=10)
 
 def buyItem():
     print('Item bought')
+    row = row + 1
+    generateLabel(buyFrame)
+    generateInput(buyFrame)
+    generateButton(buyFrame, buyItem)
 
 
 root = Tk()
 root.geometry('600x400')
+root.title('RuneScape Profit Calculator')
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~ BUY ~~~~~~~~~~~~~~~~~~~~~~~~
-buyFrame = Frame(root, bd=1, relief=SUNKEN)
+buyLabel = Label(root, text='Buy', bd=2, relief=SUNKEN, anchor=W).pack(fill=X)
 
-buyLabel = Label(buyFrame, text='Buy', bd=2, relief=SUNKEN, anchor=W)
-buyLabel.pack(fill=X)
+buyFrame = Frame(root)
 
-buyInputLabel = Label(buyFrame, text='Item: ')
-buyInputLabel.pack(side=LEFT)
-
+generateLabel(buyFrame)
 generateInput(buyFrame)
 generateButton(buyFrame, buyItem)
 
-buyFrame.pack(side=TOP, fill=X)
+buyFrame.pack()
 
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~ SELL ~~~~~~~~~~~~~~~~~~~~~~~~
-sellFrame = Frame(root, bd=1, relief=SUNKEN)
-
-sellLabel = Label(sellFrame, text='Sell', bd=2, relief=SUNKEN, anchor=W)
-sellLabel.pack(fill=X)
-
-sellInputLabel = Label(sellFrame, text='Item: ')
-sellInputLabel.pack(side=LEFT)
-
-generateInput(sellFrame)
-
-sellFrame.pack(side=TOP, fill=X)
+# Label(root, text="First").grid(row=0, sticky=W)
+# Label(root, text="Second").grid(row=1, sticky=W)
+#
+# e1 = Entry(root)
+# e2 = Entry(root)
+#
+# e1.grid(row=0, column=1)
+# e2.grid(row=1, column=1)
 
 root.mainloop()
